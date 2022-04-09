@@ -20,13 +20,20 @@ function selectCocktails() {
     }
 }
 
-//Necesito pintar la Li en el html
-function paintListCocktail() {
+//Necesito pintar la Lista de cocteles en el html
+function paintListCocktail(cocktail) {
     let html = '';
     for (const drink of cocktail) {
-        html += `<li class=js_list_cocktails id=${drink.idDrink}>`
+        html += `<li class="cocktails js_list_cocktails ${classFavorite} js-${drink.id}" id=${drink.idDrink}>`
+        html += `div class="container_color">`;
+        for (const borderColor of drink.colors) {
+            html += `<div class="cocktail__color"
+            style="background-color:#$
+            {borderColor}"></div>`;
+        }
         html += `<h2>${drink.strDrink}</h2>`
         html += `img src=${drink.strDrinkThumb}/>`
+        html += `</div>`;
         html += `</li>`
     }
     ListCocktails.innerHTML = html;
@@ -37,14 +44,14 @@ function paintListCocktail() {
             if (drink.strDrinkThumb === null) {
                 drink.strDrinkThumb = `https://via.placeholder.com/210x295/ffffff/666666/?text=TV
                 `;
-            } else {
+            }
+            else {
                 drink.strDrinkThumb;
             }
         }
     }
 }
 
-}
 //Necesito los datos de los cócteles con fetch 
 
 function fetch()
@@ -68,17 +75,23 @@ fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchValue}`)
         paintListCocktail();
     })
 
-//Necesito escuchar el evento de teclear en el input
-
-//2-Llamo a la función
-function handleKEyUpInput(event) {
-    //el elemento en el se que produjo el evento(target)
-    let toWrite = event.target.value;
-
+//Para saber si es favorito
+function favoritesCocktails(favorites) {
+    let html = "";
+    for (const drinks of favorites) {
+        let classFavorite = "";
+        const favoriteFoundIndex = favorites.findIndex(fav => {
+            return fav.id === drinks.id;
+        });
+        //Dependiendo del valor devuelto tomo la decisión si le añado la clase de fav o no
+        if (favoriteFoundIndex !== -1) {
+            classFavorite = "drink--favorite";
+        }
+        else {
+            classFavorite = "";
+        }
+    }
 }
-
-//1-Declaro el evento
-input.addEventListener("keyup", handleKEyUpInput);
 
 //Escuchar el evento clic del botón de buscar
 //2-Llamo a la función
@@ -90,3 +103,12 @@ handleBtnSearch(event) {
 //1-Declaro el evento
 search.addEventListener("click", handleBtnSearch);
 
+
+//Necesito escuchar el evento de teclear en el input
+//2-Llamo a la función
+function handleKEyUpInput(event) {
+    //el elemento en el se que produjo el evento(target)
+    let toWrite = event.target.value;
+}
+//1-Declaro el evento
+input.addEventListener("keyup", handleKEyUpInput);
