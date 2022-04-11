@@ -1,4 +1,6 @@
 'use strict';
+
+//Constantes que necesito
 const searchInput = document.querySelector('#input');
 const searchButton = document.getElementById('js_search');
 const cocktailList = document.querySelector('#js_list_cocktails');
@@ -93,3 +95,31 @@ function fetchDataOnSearchClicked(evt) {
 }
 
 searchButton.addEventListener("click", fetchDataOnSearchClicked);
+
+//LocalStorage
+
+const favCocktailListStorage = JSON.parse(localStorage.getItem("favCocktailList"));
+
+// siempre que cojo datos del local storage tengo que comprobar si son válidos
+// es decir si es la primera vez que entro en la página
+if (favCocktailListStorage !== null) {
+    favorites = favCocktailListStorage;
+    listenersFavDrinks(favorites);
+}
+else {
+    //no tengo datos en el local storage
+    //fetch palettes form server
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            //Save palettes info
+            //lo guardo en la variable global de palettes
+            favorites = data.favorites;
+            // sí tengo datos en el local storage, así lo parseo a un array 
+            localStorage.setItem("favCocktailList", JSON.stringify(favorites));
+            //Paint/renderizar HTML
+            // cada vez que modifico los arrays de favorites vuelvo pintar y a escuchar eventos
+            listenersFavDrinks(favorites);
+        });
+}
+
