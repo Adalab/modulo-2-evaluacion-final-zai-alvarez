@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <title>Buscador de cócteles</title>
+  </head>
+  <body>
+    <header>
+      <h1>Buscador de Cócteles</h1>
+    </header>
+    <main>
+      <section class="section">
+        <article>
+          <form action="">
+            <input type="text" name="input" id="input" />
+            <button id="js_search" class="search">Buscar</button>
+            <button class="reset js_reset">Reset</button>
+          </form>
+          <p id="notmatching" class="hidden">Not found matching cocktail</p>
+          <ul id="js_list_cocktails" class="list"></ul>
+        </article>
+        <article>
+          <h2 id="favourites-header" class="hidden">Favourite cocktails</h2>
+          <ul id="js_fav_cocktails" class="list"></ul>
+        </article>
+      </section>
+    </main>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
