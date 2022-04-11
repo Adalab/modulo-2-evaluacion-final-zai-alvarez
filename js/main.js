@@ -11,24 +11,23 @@ const notMatchingFeedback = document.querySelector('#notmatching');
 // info array fav drinks
 let favorites = [];
 
-
+//Para borrar elementos 
 function removeElement(clickedElement, favoriteFoundIndex, clickedCocktailName) {
     favorites.splice(favoriteFoundIndex, 1);
     clickedElement.classList.remove('fav');
     let element = favCocktailList.querySelector(`[data-name=${clickedCocktailName}]`).parentElement;
     element.remove();
-    console.log("remove from favoritos: " + clickedCocktailName);
-    console.log(favorites);
-}
 
+}
+//Para añadir más de un favorito
 function AddElementToList(clickedElement, clickedCocktailName) {
     favorites.push(clickedCocktailName);
     clickedElement.classList.add('fav');
-    console.log("añadido a favoritos: " + clickedCocktailName);
-    console.log(favorites);
+    //console.log("añadido a favoritos: " + clickedCocktailName);
+    //console.log(favorites);
     favCocktailList.innerHTML += `<li><div data-name="${clickedCocktailName}">${clickedElement.innerHTML}</div></li>`;
 }
-
+//Para mostrar-ocultar título lista fav
 function SwitchFavouritesHeader() {
     if (favorites.length === 0) {
         favCocktailListHeader.classList.add("hidden");
@@ -41,6 +40,7 @@ function SwitchFavouritesHeader() {
     }
 }
 
+//Para añadir a favoritos
 function AddToFavorites(event) {
 
     const clickedCocktailName = event.currentTarget.getAttribute('data-name');
@@ -50,7 +50,7 @@ function AddToFavorites(event) {
     });
 
 
-    if (favoriteFoundIndex === -1) { //No lo encontró
+    if (favoriteFoundIndex === -1) {
         AddElementToList(event.currentTarget, clickedCocktailName);
 
     } else {
@@ -60,7 +60,7 @@ function AddToFavorites(event) {
 
     listenersFavDrinks();
 }
-
+//Escuchar el evento clic para las bebidas favoritas
 function listenersFavDrinks() {
     const drinks = document.querySelectorAll(".cocktail");
 
@@ -68,8 +68,8 @@ function listenersFavDrinks() {
         item.addEventListener("click", AddToFavorites);
     }
 }
-
-function fetchDataOnSearchClicked(evt) {
+//Para coger los datos de la api
+function handleClick(evt) {
     evt.preventDefault();
     console.log('searched value:' + searchInput.value);
     let url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput.value}`;
@@ -94,7 +94,8 @@ function fetchDataOnSearchClicked(evt) {
         });
 }
 
-searchButton.addEventListener("click", fetchDataOnSearchClicked);
+//El evento a escuchar
+searchButton.addEventListener("click", handleClick);
 
 //LocalStorage
 
